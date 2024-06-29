@@ -1,0 +1,44 @@
+#!/bin/bash
+
+install_port()
+{
+	Pkgfile=$1
+	. $Pkgfile
+	port_dir=`dirname $Pkgfile`
+	port_name=`basename $port_dir`
+	pkg_name="`find -L $port_dir -type f -name ${name}#${version}-${release}.pkg.tar.\* -printf '%f'`"
+	printf "\rInstalling Port %-40s" "$port_name"
+		if [ -f $port_dir/$pkg_name ]; then
+			echo $name > /tmp/$name.db
+			echo $version-$release >> /tmp/$name.db
+			tar -hxvf $port_dir/$pkg_name -C / >> /tmp/$name.db 2>/dev/null #|| rm /tmp/$name.db && echo "$pkg_name failed"
+			if [ -e $port_dir/pre-install ]; then
+				echo ". $port_dir/pre-install || echo \"$port_name pre-install failed!\" && true" >> /post-install.sh
+			fi
+			if [ -e $port_dir/post-install ]; then
+				echo ". $port_dir/post-install || echo \"$port_name post-install failed!\" && true" >> /post-install.sh
+			fi
+			return 0
+		else
+			printf "Could not find an archive.\n"
+			return 1
+		fi
+}
+
+add_to_db()
+{
+	for db in `find /tmp/ -name \*.db`; do
+                cat $db >> /var/lib/pkg/db
+                echo "" >> /var/lib/pkg/db
+		rm $db
+        done
+}
+
+export -f install_port
+
+procs=`nproc`
+let procs-=1
+find -L /ts/ports -name Pkgfile | xargs -P $procs -I {} bash -c 'install_port "$@"' _ {}
+add_to_db
+. /post-install.sh
+rm /post-install.sh

@@ -1,0 +1,23 @@
+# Description: Thinstation essential package
+# URL: http://www.thinstation.org
+# Maintainer: Donald A. Cupp Jr. (don cupp jr at ya hoo dot com)
+
+name=opencryptoki
+version=3.23.0
+release=1
+source=(https://codeload.github.com/opencryptoki/opencryptoki/tar.gz/refs/tags/v$version)
+
+build() {
+	tar -xvf v$version
+	cd $name-$version
+	./bootstrap.sh
+	./configure --prefix=/usr \
+			--exec-prefix=/ \
+			--sysconfdir=/etc \
+			--libexecdir=/usr/libexec \
+			--mandir=/usr/man \
+			--disable-extras
+
+	make
+	make DESTDIR=$PKG install
+}

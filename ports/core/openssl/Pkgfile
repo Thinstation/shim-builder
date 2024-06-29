@@ -1,0 +1,103 @@
+# Description: Secure Sockets Layer and Transport Layer Security tools
+# URL: https://www.openssl.org/
+# Maintainer: CRUX System Team, core-ports at crux dot nu
+
+name=openssl
+version=3.2.1
+release=1
+source=(https://www.openssl.org/source/$name-$version.tar.gz
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0001-Aarch64-and-ppc64le-use-lib64.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0002-Use-more-general-default-values-in-openssl.cnf.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0003-Do-not-install-html-docs.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0004-Override-default-paths-for-the-CA-directory-tree.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0005-apps-ca-fix-md-option-help-text.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0006-Disable-signature-verification-with-totally-unsafe-h.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0007-Add-support-for-PROFILE-SYSTEM-system-default-cipher.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0008-Add-FIPS_mode-compatibility-macro.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0009-Add-Kernel-FIPS-mode-flag-support.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0010-Add-changes-to-ectest-and-eccurve.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0011-Remove-EC-curves.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0012-Disable-explicit-ec.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0013-skipped-tests-EC-curves.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0024-load-legacy-prov.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0025-for-tests.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0032-Force-fips.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0033-FIPS-embed-hmac.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0034.fipsinstall_disable.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0035-speed-skip-unavailable-dgst.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0044-FIPS-140-3-keychecks.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0045-FIPS-services-minimize.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0047-FIPS-early-KATS.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0049-Allow-disabling-of-SHA1-signatures.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0052-Allow-SHA1-in-seclevel-1-if-rh-allow-sha1-signatures.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0058-FIPS-limit-rsa-encrypt.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0061-Deny-SHA-1-signature-verification-in-FIPS-provider.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0062-fips-Expose-a-FIPS-indicator.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0073-FIPS-Use-OAEP-in-KATs-support-fixed-OAEP-seed.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0074-FIPS-Use-digest_sign-digest_verify-in-self-test.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0075-FIPS-Use-FFDHE2048-in-self-test.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0076-FIPS-140-3-DRBG.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0077-FIPS-140-3-zeroization.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0078-Add-FIPS-indicator-parameter-to-HKDF.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0080-rand-Forbid-truncated-hashes-SHA-3-in-FIPS-prov.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0081-signature-Remove-X9.31-padding-from-FIPS-prov.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0083-hmac-Add-explicit-FIPS-indicator-for-key-length.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0084-pbkdf2-Set-minimum-password-length-of-8-bytes.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0085-FIPS-RSA-disable-shake.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0088-signature-Add-indicator-for-PSS-salt-length.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0091-FIPS-RSA-encapsulate.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0093-DH-Disable-FIPS-186-4-type-parameters-in-FIPS-mode.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0110-GCM-Implement-explicit-FIPS-indicator-for-IV-gen.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0112-pbdkf2-Set-indicator-if-pkcs5-param-disabled-checks.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0113-asymciphers-kem-Add-explicit-FIPS-indicator.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0114-FIPS-enforce-EMS-support.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0115-skip-quic-pairwise.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0116-version-aliasing.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0117-ignore-unknown-sigalgorithms-groups.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0118-no-crl-memleak.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0119-provider-sigalgs-in-signaturealgorithms-conf.patch
+https://src.fedoraproject.org/rpms/openssl/raw/rawhide/f/0121-FIPS-cms-defaults.patch
+
+	mksslcert.sh)
+
+build() {
+	cd $name-$version
+        for patch in `ls $SRC/*.patch`; do 
+                patch -p1 -i $SRC/`basename $patch`
+        done
+
+
+	./config \
+		--prefix=/usr \
+		--libdir=lib \
+		--openssldir=/etc/ssl \
+		enable-ec_nistp_64_gcc_128 \
+		--system-ciphers-file=/etc/crypto-policies/back-ends/openssl.config \
+		zlib enable-camellia \
+		enable-seed \
+		enable-rfc3779 \
+		enable-cms \
+		enable-md2 \
+		enable-rc5 \
+		enable-ktls \
+		enable-fips \
+		-D_GNU_SOURCE \
+		no-mdc2 \
+		no-ec2m \
+		no-sm2 \
+		no-sm4 \
+		enable-buildtest-c++\
+		shared \
+		-Wa,--noexecstack -Wa,--generate-missing-build-notes=yes -DPURIFY \
+		'-DDEVRANDOM="\"/dev/urandom\"" -DREDHAT_FIPS_VERSION="\"3.2.1-5b3437c179561436\""'\
+		-Wl,--allow-multiple-definition
+
+	sed -i "s|-O3|$CFLAGS|" Makefile
+
+	make depend
+	make
+	make MANSUFFIX=ssl DESTDIR=$PKG install_sw install_ssldirs install_man_docs
+
+#	find $PKG -name "*fips*" -delete
+	install -D -m 755 $SRC/mksslcert.sh $PKG/usr/bin/mksslcert
+}

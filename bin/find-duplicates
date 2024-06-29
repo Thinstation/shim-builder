@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Define the base directory
+base_directory="/ts/ports/"
+
+# Function to find duplicate project directories
+find_duplicate_project_directories() {
+    # Traverse each project directory under the base directory
+    find "$1" -mindepth 2 -maxdepth 2 -type d | while read -r project_dir; do
+        project_name=$(basename "$project_dir")
+        # Search for other occurrences of the same project name
+        occurrences=$(find "$base_directory" -mindepth 2 -maxdepth 2 -type d -name "$project_name" | wc -l)
+        # If more than one occurrence, report duplicates
+        if [ "$occurrences" -gt 1 ]; then
+            echo "Duplicate project directories for $project_name:"
+            find "$base_directory" -mindepth 2 -maxdepth 2 -type d -name "$project_name" -print
+            echo
+        fi
+    done
+}
+
+# Find duplicate project directories within the base directory
+find_duplicate_project_directories "$base_directory"
