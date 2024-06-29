@@ -32,6 +32,4 @@ build() {
     install -D -m644 COPYRIGHT "${PKG}/usr/share/licenses/${name}/LICENSE"
 
     rm -rf $PKG/usr/{src,lib/debug}
-
-    sha256sum $PKG/usr/share/shim/$version/x64/shimx64.efi
 }
