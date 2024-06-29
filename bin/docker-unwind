@@ -35,10 +35,12 @@ add_to_db()
 }
 
 export -f install_port
+core_ports="filesystem acl attr libcap coreutils pkgutils glibc bash readline ncurses findutils libpcre libpcre2 grep sed tar xz gzip libselinux"
+exclude=`echo "$core_ports"|sed -e 's/ /\/\|/g'`
 
 procs=`nproc`
 let procs-=1
-find -L /ts/ports -name Pkgfile | xargs -P $procs -I {} bash -c 'install_port "$@"' _ {}
+find -L /ts/ports -name Pkgfile | grep -Ev "$exclude" | xargs -P $procs -I {} bash -c 'install_port "$@"' _ {}
 add_to_db
 . /post-install.sh
 rm /post-install.sh
