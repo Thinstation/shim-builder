@@ -13,8 +13,6 @@ source=(UEFI-CA.cer \
 build() {
     unset CFLAGS CXXFLAGS
 
-#    git clone --recurse-submodules https://www.github.com/rhboot/shim.git -b shim-$version
-
     cd shim-$version
 
     cat $SRC/BOOTX64.csv >> data/sbat.csv
@@ -26,10 +24,6 @@ build() {
 
 
     make
-
-    for efi in mmx64.efi fbx64.efi; do
-	efisign $efi "UEFI Signing"
-    done
 
     make EFIDIR=ThinStation DESTDIR="$PKG" install
     make DESTDIR="$PKG" install-as-data
